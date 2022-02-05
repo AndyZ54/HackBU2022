@@ -1,8 +1,9 @@
 import pygame
-import controller
+import src.controller
 
 def main():
     pygame.init()
-    game = controller.Controller()
+    game = src.controller.Controller()
     game.game()
+    
 main()
