@@ -6,7 +6,7 @@ class Controller:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1280,720))
-        self.screen_name = pygame.display.set_caption("Our Game")
+        self.screen_name = pygame.display.set_caption("Love Messenger")
         self.game_state = "start"
 
         self.start_image = pygame.image.load('assets/Next red.png')
