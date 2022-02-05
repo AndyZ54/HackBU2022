@@ -1,5 +1,4 @@
 import pygame
-from pyparsing import White
 from src.button import Button
 
 class Controller:
@@ -31,11 +30,16 @@ class Controller:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.exit_game()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.start_button.rect.collidepoint(event.pos):
+                        print("start game")
+                        self.STATE = "game"
 
     #The actual Game
     def game(self):
         while self.game_state == "game":
-            pass 
+            pass
+
       
     #Exit the Game
     def exit_game(self):
