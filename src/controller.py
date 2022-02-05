@@ -1,23 +1,29 @@
 import pygame
+from pyparsing import White
 from src.button import Button
 
 class Controller:
     #The Display 
     def __init__(self):
-        self.screen = pygame.display.set_mode((1000,1000))
-        self.screen_name =pygame.display.set_caption("Our Game")
+        pygame.init()
+        self.screen = pygame.display.set_mode((1280,720))
+        self.screen_name = pygame.display.set_caption("Our Game")
         self.game_state = "start"
-        self.start_button = Button(100,400, 'assets/Next red.png')
-        self.end_button = Button(450, 200, 'assets/Cross red.png')
+
+        self.start_image = pygame.image.load('assets/Next red.png')
+        self.end_image = pygame.image.load('assets/Option grey.png')
+        self.end_button = Button(450,450, self.screen, self.end_image)
+        self.start_button = Button(730, 450, self.screen, self.start_image)
 
     #Start Screen
     def start_screen(self):
         while self.game_state == "start":
-            self.screen.fill((0,0,0,0))
-            self.screen.blit(self.start.image, (self.start.rect.x,self.start.rect.y))
+            # self.screen.fill((0,0,0,0))
 
+            self.screen.fill((0,200,240))
             self.start_button.draw()
             self.end_button.draw()
+            pygame.display.update()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -31,4 +37,3 @@ class Controller:
     #Exit the Game
     def exit_game(self):
         pygame.quit()
-        exit()
