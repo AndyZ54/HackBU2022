@@ -6,4 +6,12 @@ class Controller:
         self.gameState = "start"
     def game(self):
         while self.gameState == "start":
-            print("hello")
+            pass
+    def startScreen(self):
+        while self.gameState == "start":
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.exitGame()
+    def exitGame(self):
+        pygame.quit()
+        exit()
