@@ -21,10 +21,13 @@ class Controller:
             # self.screen.fill((0,0,0,0))
 
             self.screen.fill((0,200,240))
-            self.start_button.draw()
-            self.end_button.draw()
+            if self.start_button.draw():
+                self.game_state == "game"
+            if self.end_button.draw():
+                self.exit_game()
+
             pygame.display.update() 
-        
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.exit_game()
