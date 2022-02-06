@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
         
     def animate(self):
         
-        self.current_image += 0.8
+        self.current_image += 1
         if self.current_image >= len(self.running_sprites):
             self.current_image = 0
         self.image = self.running_sprites[int(self.current_image)]

@@ -2,7 +2,6 @@ from re import X
 import pygame
 from src import button
 from src import player
-from src import platform
 from src import hearts
 
 class Controller():
@@ -42,7 +41,6 @@ class Controller():
             self.start_button = button.Button(550, 660, self.screen, self.start_image)
             self.help_button = button.Button(40,660, self.screen, self.help_image)
             self.exit_button = button.Button(1050, 660, self.screen, self.exit_image)
-            self.platform = platform.Platform(0, 900 - 40, 1600, 40)
             self.player = player.Player(300,740,self.screen)
             self.screen.blit(self.background, (0,0))
             self.screen.blit(self.title, (25,100))
@@ -127,43 +125,43 @@ class Controller():
             self.screen.blit(self.sky,(rel_x_sky - self.sky.get_rect().width,0))
             if rel_x_sky < 1600:
                 self.screen.blit(self.sky,(rel_x_sky,0))
-            x_sky -= 2
+            x_sky -= 4
             
             rel_x = x % self.house.get_rect().width
             self.screen.blit(self.house,(rel_x - self.house.get_rect().width,0))
             if rel_x < 1600:
                 self.screen.blit(self.house,(rel_x,0))
-            x_house -= 2
+            x_house -= 4
 
             rel_x_house2 = x_house2 % self.house2.get_rect().width
             self.screen.blit(self.house2,(rel_x_house2 - self.house2.get_rect().width,0))
             if rel_x_house2 < 1600:
                 self.screen.blit(self.house2,(rel_x_house2,0))
-            x_house2 -= 2
+            x_house2 -= 5
 
             rel_fb = x_fb % self.fountain.get_rect().width
             self.screen.blit(self.fountain,(rel_fb - self.fountain.get_rect().width,0))
             if rel_fb < 1600:
                 self.screen.blit(self.fountain,(rel_fb,0))
-            x_fb -= 3
+            x_fb -= 6
 
             rel_x_house1 = x_house1 % self.house1.get_rect().width
             self.screen.blit(self.house1,(rel_x_house1 - self.house1.get_rect().width,0))
             if rel_x_house1 < 1600:
                 self.screen.blit(self.house1,(rel_x_house1,0))
-            x_house1 -= 3
+            x_house1 -= 6
 
             rel_umb = x_umb % self.umbrella.get_rect().width
             self.screen.blit(self.umbrella,(rel_umb - self.umbrella.get_rect().width,0))
             if rel_umb < 1600:
                 self.screen.blit(self.umbrella,(rel_umb,0))
-            x_umb -= 3
+            x_umb -= 7
 
             rel_road = x_road % self.road.get_rect().width
             self.screen.blit(self.road,(rel_road - self.road.get_rect().width,0))
             if rel_road < 1600:
                 self.screen.blit(self.road,(rel_road,0))
-            x_road -= 4
+            x_road -= 7
 
             self.player.move()
             self.player.draw(self.screen)
@@ -173,7 +171,7 @@ class Controller():
             self.heart_sprite.draw(self.screen)
 
             pygame.display.flip()
-            
+
     def end_screen(self):
         pass
         
