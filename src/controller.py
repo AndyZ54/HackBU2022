@@ -186,9 +186,7 @@ class Controller():
                     new_obx, new_oby = random.randrange(2000, 20000), 700
                     randoNumbo2 = random.randrange(1,6)
                     new_boy = obstacles.Obstacles(new_obx, new_oby, randoNumbo2)
-                    new_boy_touching = pygame.sprite.spritecollide(new_boy, self.all_obstacles, False, pygame.sprite.collide_circle_ratio(0.7))
-                    if not new_boy_touching:
-                        self.all_obstacles.add()
+                    self.all_obstacles.add(new_boy)
 
                 if len(self.all_heart_sprites) < 10:
                     new_x, new_y = random.randrange(2000, 20000), random.randrange(600, 700)
