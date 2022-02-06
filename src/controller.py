@@ -186,7 +186,7 @@ class Controller():
             self.back_button = pygame.image.load('assets/help/back.png')
             self.screen.blit(self.menu_background, (0,0))
             self.screen.blit(self.instructions, (0,0))
-            self.back_button = button.Button(400, 680, self.screen, self.back_button)
+            self.back_button = button.Button(400, 740, self.screen, self.back_button)
             self.back_button.draw()
             pygame.display.update()
 
