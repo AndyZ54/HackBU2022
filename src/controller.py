@@ -76,6 +76,9 @@ class Controller():
         self.road = pygame.image.load('assets/city/road.png').convert_alpha()
 
         while self.STATE == "game":
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.STATE = "exit"
             clock = pygame.time.Clock()
             Framerate = 60
             clock.tick(Framerate)
