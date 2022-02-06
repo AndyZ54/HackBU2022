@@ -2,6 +2,7 @@ from re import X
 import pygame
 from src import button
 from src import player
+from src import platform
 
 class Controller():
     #The Display 
@@ -36,6 +37,7 @@ class Controller():
             self.start_button = button.Button(550, 660, self.screen, self.start_image)
             self.help_button = button.Button(40,660, self.screen, self.help_image)
             self.exit_button = button.Button(1050, 660, self.screen, self.exit_image)
+            self.platform = platform.Platform(0, 900 - 40, 1600, 40)
             self.player = player.Player(300,740,self.screen)
             self.screen.blit(self.background, (0,0))
             self.screen.blit(self.title, (25,100))
@@ -69,6 +71,8 @@ class Controller():
         x_fb = 0
         x_umb = 0
         x_road = 0
+        jumping = False
+        gravity = 0.5
 
         self.sky = pygame.image.load('assets/city/Sky.png').convert()
         self.house = pygame.image.load('assets/city/houses.png').convert_alpha()
@@ -84,9 +88,27 @@ class Controller():
         self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
 
         while self.STATE == "game":
+            
+            self.player.y_velocity += gravity
+            if self.player.y_velocity > 10:
+                self.player.y_velocity = 10
+            self.player.rect.y += self.player.y_velocity
+            if self.player.rect.bottom + self.player.rect.y > 1450:
+                self.player.rect.y = 1450 - (self.player.rect.bottom)
+                self.player.y_velocity = 0
+                self.player.airborne = False
+
             for event in pygame.event.get():
+                keys = pygame.key.get_pressed()
                 if event.type == pygame.QUIT:
                     self.STATE = "exit"
+                if  keys[pygame.K_UP] or keys[pygame.K_SPACE]:
+                    self.player.jumping = True
+                else:
+                    self.player.jumping = False
+            print(self.player.jumping)
+                
+                
             clock = pygame.time.Clock()
             Framerate = 60
             clock.tick(Framerate)
@@ -133,6 +155,7 @@ class Controller():
                 self.screen.blit(self.road,(rel_road,0))
             x_road -= 4
 
+            self.player.move()
             self.player.draw(self.screen)
             self.player.update()     
             self.screen.blit(self.display_health, (1370, 50))
