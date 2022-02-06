@@ -88,7 +88,7 @@ class Controller():
         self.score = 0
         self.health = 0
         self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
-        self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
+        self.display_health = self.font.render('Health : ' + str(self.player.health), False , (225, 215, 0))
 
         self.heart_sprite = pygame.sprite.Group()
         # for i in range(5):
