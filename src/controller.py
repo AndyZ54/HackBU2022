@@ -61,18 +61,25 @@ class Controller():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_button.rect.collidepoint(event.pos):
                         self.STATE = "game"
-                        print(self.STATE)
+                        
                     elif self.help_button.rect.collidepoint(event.pos):
                         self.STATE = "help"
-                        print(self.STATE)
+                        
                     elif self.exit_button.rect.collidepoint(event.pos):
                         self.STATE = "exit"
                         self.is_running = False
-                        print(self.STATE)
+                        
                     
     #The actual Game
     def game(self):
-
+        self.end_one = []
+        for i in range(1,4):
+                image = pygame.image.load(f"assets/win/end1/Win ({i}).png")
+                self.end_one.append(image)
+        for i in self.end_one:
+                self.screen.blit(i,(0,0))
+                pygame.display.update()
+                pygame.time.delay(1500)
         x = 0
         x_sky = 0
         x_house = 0
@@ -244,7 +251,7 @@ class Controller():
                     self.STATE = "start"
                 if self.end_quit_button.rect.collidepoint(event.pos):
                     self.STATE = "exit"
-                if self.end_menu_button.rect.collidepoint(event.pos):
+                if self.end_restart_button.rect.collidepoint(event.pos):
                     self.STATE = "start"
 
     def help(self):
@@ -266,20 +273,24 @@ class Controller():
                     if self.back_button.rect.collidepoint(event.pos):
                         self.STATE = "start"
     def win(self):
-        self.end_one = []
         self.end_two = []
-        while self.STATE == "win":
-            for i in range(1,4):
-                image = pygame.image.load(f"assets/win/end1/Win ({i}).png")
-                self.end_one.append(image)
+        if self.STATE == "win":
             for i in range(1,9):
                 image = pygame.image.load(f"assets/win/end2/Win ({i}).png")
                 self.end_two.append(image)
-            for i in self.end_one:
-                self.screen.blit(i, (0,0))
             for i in self.end_two:
                 self.screen.blit(i, (0,0))
-            pygame.display.update()
+                pygame.display.update()
+                pygame.time.delay(1000)
+        while self.STATE == "win":
+            next_image = pygame.image.load("assets/win/end2/Win (8).png")
+            self.screen.blit(next_image, (0,0))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.STATE = "exit"
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                        self.STATE = "start"
+
     #Exit the Game
     def exit_game(self):
         self.is_running = False
