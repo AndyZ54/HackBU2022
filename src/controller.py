@@ -79,7 +79,7 @@ class Controller():
         x_umb = 0
         x_road = 0
         jumping = False
-        gravity = 0.5
+        gravity = 0.6
         heart = 1
 
         self.sky = pygame.image.load('assets/city/Sky.png').convert()
@@ -97,15 +97,17 @@ class Controller():
         self.all_heart_sprites = pygame.sprite.Group()
         self.all_obstacles = pygame.sprite.Group()
         for i in range(10):
-            x, y = random.randrange(2000, 30000), random.randrange(300, 700)
+            x, y = random.randrange(2000, 20000), random.randrange(600, 700)
             self.all_heart_sprites.add(hearts.Hearts(x, y))
 
-        for i in range(10):
-            x_obs, y_obs = random.randrange(2000, 30000), random.randrange(300, 700)
-            self.all_obstacles.add(obstacles.Obstacles(x_obs, y_obs))
+        for j in range(20):
+            x_obs, y_obs = random.randrange(2000, 20000), 700
+            randoNumbo = random.randrange(1,6)
+            self.all_obstacles.add(obstacles.Obstacles(x_obs, y_obs, randoNumbo))
 
         while self.STATE == "game":
             self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
+            self.display_health = self.font.render('Health : ' + str(self.player.health), False , (225, 215, 0))
             self.player.y_velocity += gravity
             if self.player.y_velocity > 10:
                 self.player.y_velocity = 10
@@ -180,12 +182,16 @@ class Controller():
                 if player_hit_by_obstacle:
                     self.player.health -= 1
                 
-                if len(self.all_obstacles) < 25:
-                    new_obx, new_oby = random.randrange(2000, 20000), random.randrange(300, 700)
-                    self.all_obstacles.add(obstacles.Obstacles(new_obx, new_oby))
+                if len(self.all_obstacles) < 20:
+                    new_obx, new_oby = random.randrange(2000, 20000), 700
+                    randoNumbo2 = random.randrange(1,6)
+                    new_boy = obstacles.Obstacles(new_obx, new_oby, randoNumbo2)
+                    new_boy_touching = pygame.sprite.spritecollide(new_boy, self.all_obstacles, False, pygame.sprite.collide_circle_ratio(0.7))
+                    if not new_boy_touching:
+                        self.all_obstacles.add()
 
-                if len(self.all_heart_sprites) < 25:
-                    new_x, new_y = random.randrange(2000, 20000), random.randrange(300, 700)
+                if len(self.all_heart_sprites) < 10:
+                    new_x, new_y = random.randrange(2000, 20000), random.randrange(600, 700)
                     self.all_heart_sprites.add(hearts.Hearts(new_x, new_y))
 
             self.all_heart_sprites.update()
@@ -199,7 +205,7 @@ class Controller():
             self.player.update()     
             self.screen.blit(self.display_health, (1370, 50))
             self.screen.blit(self.display_score, (10, 50))
-            # self.all_heart_sprites.draw(self.screen)
+            
 
             pygame.display.flip()
 

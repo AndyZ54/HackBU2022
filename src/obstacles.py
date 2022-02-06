@@ -2,28 +2,37 @@ import pygame
 import random 
 class Obstacles(pygame.sprite.Sprite):
     #creates and initalizes the obstacle position
-    def __init__(self, x, y):
+    def __init__(self, x, y, obstacleNum):
         #selects random obstacle
         pygame.sprite.Sprite.__init__(self)
-        self.x = x
-        self.y = y
-        obstacleNum = random.randrange(1,5)
+        
+        
         if obstacleNum == 1:
-            player_image = pygame.image.load('assets/obstacles/obstacle1.png')
-            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
+            the_image = pygame.image.load('assets/obstacle/cone.png')
+            the_image = pygame.transform.scale(the_image, (int(the_image.get_width() * 0.5), int(the_image.get_height() * 0.5)))
+            self.image = the_image
         elif obstacleNum == 2:
-            player_image = pygame.image.load('assets/obstacles/obstacle2.png')
-            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
+            the_image = pygame.image.load('assets/obstacle/dog.png')
+            the_image = pygame.transform.scale(the_image, (int(the_image.get_width() * 0.5), int(the_image.get_height() * 0.5)))
+            self.image = the_image
         elif obstacleNum == 3:
-            player_image = pygame.image.load('assets/obstacles/obstacle3.png')
-            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
+            the_image = pygame.image.load('assets/obstacle/garbage.png')
+            the_image = pygame.transform.scale(the_image, (int(the_image.get_width() * 0.5), int(the_image.get_height() * 0.5)))
+            self.image = the_image
         elif obstacleNum == 4:
-            player_image = pygame.image.load('assets/obstacles/obstacle4.png')
-            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
+            the_image = pygame.image.load('assets/obstacle/hyrant.png')
+            the_image = pygame.transform.scale(the_image, (int(the_image.get_width() * 0.5), int(the_image.get_height() * 0.5)))
+            self.image = the_image
         elif obstacleNum == 5:
-            player_image = pygame.image.load('assets/obstacles/obstacle5.png')
-            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
+            the_image = pygame.image.load('assets/obstacle/poop.png')
+            the_image = pygame.transform.scale(the_image, (int(the_image.get_width() * 1), int(the_image.get_height() * 1)))
+            self.image = the_image
+        
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        
+        self.update()
 
     #moves obstacles across the screen
     def update(self):
@@ -34,4 +43,4 @@ class Obstacles(pygame.sprite.Sprite):
 
     #draw the object
     def draw(self, screen):
-        self.screen.blit(self.image, self.rect())
+        screen.blit(self.image, (self.rect.x, self.rect.y))
