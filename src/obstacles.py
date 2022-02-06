@@ -1,10 +1,5 @@
 import pygame
-<<<<<<< HEAD
 import random 
-=======
-import random
-
->>>>>>> b382f6669beaba9cc8067a1d4c62d8a9b435dc4b
 class Obstacles:
     #creates and initalizes the obstacle position
     def __init__(self):
