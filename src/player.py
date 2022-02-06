@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
 
         for i in range(1,16):
             player_image = pygame.image.load(f"assets/theboy/Run ({i}).png")
-            player_image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.3), int(player_image.get_height() * 0.3)))
+            player_image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
             self.running_sprites.append(player_image)
 
         self.current_image = 0
@@ -39,7 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = (self.x, self.y))
         
     def animate(self):
-        self.current_image += 0.5
+        self.current_image += 0.8
         if self.current_image >= len(self.running_sprites):
             self.current_image = 0
         
