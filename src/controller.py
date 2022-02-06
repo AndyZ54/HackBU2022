@@ -15,7 +15,7 @@ class Controller():
         self.screen_name = pygame.display.set_caption("Love Message")
         self.is_running = True
         self.font = pygame.font.SysFont("Minecraft", 70)
-        self.STATE = "win"
+        self.STATE = "start"
 
     def mainloop(self):
         while self.is_running == True:
@@ -208,8 +208,6 @@ class Controller():
                     self.all_heart_sprites.add(hearts.Hearts(new_x, new_y))
             else:
                 self.STATE = "end"
-            if self.score == 10:
-                self.STATE = "win"
 
             self.all_heart_sprites.update()
             self.all_heart_sprites.draw(self.screen)
@@ -223,7 +221,8 @@ class Controller():
             self.screen.blit(self.display_health, (1370, 50))
             self.screen.blit(self.display_score, (10, 50))
             
-
+            if self.score == 2:     
+                self.STATE = "win"
             pygame.display.flip()
 
     def end_screen(self):
@@ -249,9 +248,9 @@ class Controller():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.end_menu_button.rect.collidepoint(event.pos):
                     self.STATE = "start"
-                if self.end_quit_button.rect.collidepoint(event.pos):
+                elif self.end_quit_button.rect.collidepoint(event.pos):
                     self.STATE = "exit"
-                if self.end_restart_button.rect.collidepoint(event.pos):
+                elif self.end_restart_button.rect.collidepoint(event.pos):
                     self.STATE = "start"
 
     def help(self):
@@ -274,17 +273,18 @@ class Controller():
                         self.STATE = "start"
     def win(self):
         self.end_two = []
+        for i in range(1,9):
+            image = pygame.image.load(f"assets/win/end2/Win ({i}).png")
+            self.end_two.append(image)
         if self.STATE == "win":
-            for i in range(1,9):
-                image = pygame.image.load(f"assets/win/end2/Win ({i}).png")
-                self.end_two.append(image)
             for i in self.end_two:
                 self.screen.blit(i, (0,0))
-                pygame.display.update()
                 pygame.time.delay(1000)
-        while self.STATE == "win":
+                pygame.display.update()
             next_image = pygame.image.load("assets/win/end2/Win (8).png")
             self.screen.blit(next_image, (0,0))
+            pygame.time.delay(5000)
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.STATE = "exit"
