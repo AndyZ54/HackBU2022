@@ -8,6 +8,8 @@ class Controller:
         self.screen = pygame.display.set_mode((1280,720))
         self.screen_name = pygame.display.set_caption("Our Game")
         self.STATE = "start"
+        
+        self.is_running = True
 
         self.start_image = pygame.image.load('assets/Next red.png')
         self.help_image = pygame.image.load('assets/Option grey.png')
@@ -15,9 +17,25 @@ class Controller:
 
         self.help_button = Button(450,450, self.screen, self.help_image)
         self.start_button = Button(730, 450, self.screen, self.start_image)
-        self.exit_button = Button(640, 600, self.screen, self.exit_image)
+        self.exit_button = Button(590, 450, self.screen, self.exit_image)
 
-
+    def mainloop(self):
+        '''
+        The main loop that changes state based on what is occuring on screen
+        args: none
+        return: none
+        '''
+        while self.is_running:
+            if self.STATE == "start":
+                self.start_screen()
+            elif self.STATE == "game":
+                self.game()
+            elif self.STATE == "help":
+                self.help()
+            # elif self.STATE == "end":
+            #     self.endloop()
+            elif self.STATE == "exit":
+                self.exit_game()
     #Start Screen
     def start_screen(self):
         while self.STATE == "start":
@@ -42,15 +60,30 @@ class Controller:
                         self.STATE = "help"
                     if self.exit_button.rect.collidepoint(event.pos):
                         print("exit game")
-                        self.STATE = "help"
+                        self.STATE = "exit"
                     
 
     #The actual Game
     def game(self):
         while self.STATE == "game":
-            pass
+            # Placeholders for Now
+            self.is_running = False
+            self.STATE = "boi"
+            print(self.STATE)
+            pygame.quit()
 
-      
+    def help(self):
+        while self.STATE == "help":
+            # Placeholders for Now
+            self.is_running = False
+            self.STATE = "boi"
+            print(self.STATE)
+            pygame.quit()
     #Exit the Game
     def exit_game(self):
-        pygame.quit()
+        while self.STATE == "exit":
+            # Placeholders for Now
+            self.STATE = "boi"
+            print(self.STATE)
+            self.is_running = False
+            pygame.quit()
