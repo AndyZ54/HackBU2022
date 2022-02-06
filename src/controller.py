@@ -91,7 +91,6 @@ class Controller():
         self.road = pygame.image.load('assets/city/road.png').convert_alpha()
 
         self.score = 0
-<<<<<<< Updated upstream
         self.health = 0
         self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
         self.display_health = self.font.render('Health : ' + str(self.player.health), False , (225, 215, 0))
@@ -104,16 +103,6 @@ class Controller():
         for i in range(10):
             x_obs, y_obs = random.randrange(2000, 30000), random.randrange(300, 700)
             self.all_obstacles.add(obstacles.Obstacles(x_obs, y_obs))
-=======
-        self.health = 5
-        self.display_score = self.font.render('Envelopes Collected : ' + str(self.score), False , (255,192,203))
-        self.display_health = self.font.render('Health : ' + str(self.health), False ,  (255,192,203))
-        self.all_heart_sprites = pygame.sprite.Group()
-        self.hearts = hearts.Hearts(1500, random.randrange(470, 700))
-        self.all_heart_sprites.add(self.hearts)
-        if self.hearts.rect.x < 300:
-            self.all_heart_sprites.add(self.hearts)
->>>>>>> Stashed changes
 
         while self.STATE == "game":
             self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
@@ -210,12 +199,7 @@ class Controller():
             self.player.update()     
             self.screen.blit(self.display_health, (1370, 50))
             self.screen.blit(self.display_score, (10, 50))
-<<<<<<< Updated upstream
             # self.all_heart_sprites.draw(self.screen)
-=======
-            self.all_heart_sprites.draw(self.screen)
-            self.hearts.update_x()
->>>>>>> Stashed changes
 
             pygame.display.flip()
 
