@@ -92,11 +92,20 @@ class Controller():
         self.score = 0
         self.health = 0
         self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
+<<<<<<< HEAD
         self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
         self.all_heart_sprites = pygame.sprite.Group()
         for i in range(5):
             #x, y = random.randrange(700, 1400), random.randrange(470, 700)
             self.all_heart_sprites.add(hearts.Hearts(1500, 470))
+=======
+        self.display_health = self.font.render('Health : ' + str(self.player.health), False , (225, 215, 0))
+
+        self.heart_sprite = pygame.sprite.Group()
+        # for i in range(5):
+        #     x , y = 700 , random.randrange(700, 1400)
+        self.heart_sprite.add(hearts.Hearts(700, 1400, self.screen, 'assets/heart.png'))
+>>>>>>> b382f6669beaba9cc8067a1d4c62d8a9b435dc4b
 
         while self.STATE == "game":
             
