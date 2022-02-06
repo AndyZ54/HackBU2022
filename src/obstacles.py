@@ -1,8 +1,8 @@
 import pygame
-
+import random 
 class Obstacles:
     #creates and initalizes the obstacle position
-    def__init__(self):
+    def __init__(self):
         #selects random obstacle
         obstacleNum = random.randrange(1,5)
         if obstacleNum == 1:
@@ -27,4 +27,4 @@ class Obstacles:
 
     #draw the object
     def draw(self, pygame.display.set_mode((1600,900))):
-        screen.blit(self.image, self.rect())
+        self.screen.blit(self.image, self.rect())

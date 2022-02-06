@@ -1,8 +1,10 @@
 from re import X
 import pygame
+import random
 from src import button
 from src import player
 from src import hearts
+
 
 class Controller():
     #The Display 
@@ -66,6 +68,7 @@ class Controller():
                     
     #The actual Game
     def game(self):
+
         x = 0
         x_sky = 0
         x_house = 0
@@ -76,6 +79,7 @@ class Controller():
         x_road = 0
         jumping = False
         gravity = 0.5
+        heart = 1
 
         self.sky = pygame.image.load('assets/city/Sky.png').convert()
         self.house = pygame.image.load('assets/city/houses.png').convert_alpha()
@@ -89,11 +93,10 @@ class Controller():
         self.health = 0
         self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
         self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
-
-        self.heart_sprite = pygame.sprite.Group()
-        # for i in range(5):
-        #     x , y = 700 , random.randrange(700, 1400)
-        self.heart_sprite.add(hearts.Hearts(700, 1400, self.screen, 'assets/heart.png'))
+        self.all_heart_sprites = pygame.sprite.Group()
+        for i in range(5):
+            #x, y = random.randrange(700, 1400), random.randrange(470, 700)
+            self.all_heart_sprites.add(hearts.Hearts(1500, 470))
 
         while self.STATE == "game":
             
@@ -168,7 +171,7 @@ class Controller():
             self.player.update()     
             self.screen.blit(self.display_health, (1370, 50))
             self.screen.blit(self.display_score, (10, 50))
-            self.heart_sprite.draw(self.screen)
+            self.all_heart_sprites.draw(self.screen)
 
             pygame.display.flip()
 
