@@ -1,35 +1,37 @@
 import pygame
 import random 
-class Obstacles:
+class Obstacles(pygame.sprite.Sprite):
     #creates and initalizes the obstacle position
-    def __init__(self):
+    def __init__(self, x, y):
         #selects random obstacle
+        pygame.sprite.Sprite.__init__(self)
+        self.x = x
+        self.y = y
         obstacleNum = random.randrange(1,5)
         if obstacleNum == 1:
-            self.image = pygame.image.load('assets/obstacles/obstacle1.png')
+            player_image = pygame.image.load('assets/obstacles/obstacle1.png')
+            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
         elif obstacleNum == 2:
-            self.image = pygame.image.load('assets/obstacles/obstacle2.png')
+            player_image = pygame.image.load('assets/obstacles/obstacle2.png')
+            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
         elif obstacleNum == 3:
-            self.image = pygame.image.load('assets/obstacles/obstacle3.png')
+            player_image = pygame.image.load('assets/obstacles/obstacle3.png')
+            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
         elif obstacleNum == 4:
-            self.image = pygame.image.load('assets/obstacles/obstacle4.png')
+            player_image = pygame.image.load('assets/obstacles/obstacle4.png')
+            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
         elif obstacleNum == 5:
-            self.image = pygame.image.load('assets/obstacles/obstacle5.png')
+            player_image = pygame.image.load('assets/obstacles/obstacle5.png')
+            self.image = pygame.transform.scale(player_image, (int(player_image.get_width() * 0.4), int(player_image.get_height() * 0.4)))
         self.rect = self.image.get_rect()
-        self.rect.x = 1600
 
     #moves obstacles across the screen
     def update(self):
-        self.rect.x -= 60
+        self.rect.x -= 12
         #remove obstacle when it is outside of the screen
-        if self.x < -self.rect.width:
-            self.obstacles.pop()
+        if self.rect.right < 100:
+            self.kill()
 
     #draw the object
-<<<<<<< HEAD
-    def draw(self, pygame.display.set_mode((1600,900))):
-        self.screen.blit(self.image, self.rect())
-=======
     def draw(self, screen):
-        screen.blit(self.image, self.rect())
->>>>>>> b382f6669beaba9cc8067a1d4c62d8a9b435dc4b
+        self.screen.blit(self.image, self.rect())

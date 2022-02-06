@@ -9,6 +9,10 @@ class Hearts(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.update_x()
-    def update_x(self):
-        self.rect.x -= 1
+        self.update()
+    def update(self):
+        self.rect.x -= 10
+        if self.rect.right < 100:
+            self.kill()
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))

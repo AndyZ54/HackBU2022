@@ -4,6 +4,7 @@ import random
 from src import button
 from src import player
 from src import hearts
+from src import obstacles
 
 
 class Controller():
@@ -92,14 +93,19 @@ class Controller():
         self.score = 0
         self.health = 0
         self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
-        self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
+        self.display_health = self.font.render('Health : ' + str(self.player.health), False , (225, 215, 0))
         self.all_heart_sprites = pygame.sprite.Group()
-        for i in range(5):
-            #x, y = random.randrange(700, 1400), random.randrange(470, 700)
-            self.all_heart_sprites.add(hearts.Hearts(1500, 470))
+        self.all_obstacles = pygame.sprite.Group()
+        for i in range(10):
+            x, y = random.randrange(2000, 30000), random.randrange(300, 700)
+            self.all_heart_sprites.add(hearts.Hearts(x, y))
+
+        for i in range(10):
+            x_obs, y_obs = random.randrange(2000, 30000), random.randrange(300, 700)
+            self.all_obstacles.add(obstacles.Obstacles(x_obs, y_obs))
 
         while self.STATE == "game":
-            
+            self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
             self.player.y_velocity += gravity
             if self.player.y_velocity > 10:
                 self.player.y_velocity = 10
@@ -166,12 +172,34 @@ class Controller():
                 self.screen.blit(self.road,(rel_road,0))
             x_road -= 7
 
+            if self.player.health > 0:
+                player_hit = pygame.sprite.spritecollide(self.player, self.all_heart_sprites, True, pygame.sprite.collide_circle_ratio(0.4))
+                player_hit_by_obstacle = pygame.sprite.spritecollide(self.player, self.all_obstacles, True, pygame.sprite.collide_circle_ratio(0.4))
+                if player_hit:
+                    self.score += 1
+                if player_hit_by_obstacle:
+                    self.player.health -= 1
+                
+                if len(self.all_obstacles) < 25:
+                    new_obx, new_oby = random.randrange(2000, 20000), random.randrange(300, 700)
+                    self.all_obstacles.add(obstacles.Obstacles(new_obx, new_oby))
+
+                if len(self.all_heart_sprites) < 25:
+                    new_x, new_y = random.randrange(2000, 20000), random.randrange(300, 700)
+                    self.all_heart_sprites.add(hearts.Hearts(new_x, new_y))
+
+            self.all_heart_sprites.update()
+            self.all_heart_sprites.draw(self.screen)
+
+            self.all_obstacles.update()
+            self.all_obstacles.draw(self.screen)
+
             self.player.move()
             self.player.draw(self.screen)
             self.player.update()     
             self.screen.blit(self.display_health, (1370, 50))
             self.screen.blit(self.display_score, (10, 50))
-            self.all_heart_sprites.draw(self.screen)
+            # self.all_heart_sprites.draw(self.screen)
 
             pygame.display.flip()
 
