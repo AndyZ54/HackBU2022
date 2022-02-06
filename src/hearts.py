@@ -9,6 +9,7 @@ class Hearts(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+<<<<<<< Updated upstream
         self.update()
     def update(self):
         self.rect.x -= 10
@@ -16,3 +17,8 @@ class Hearts(pygame.sprite.Sprite):
             self.kill()
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
+=======
+        self.update_x()
+    def update_x(self):
+        self.rect.x -= 15
+>>>>>>> Stashed changes
