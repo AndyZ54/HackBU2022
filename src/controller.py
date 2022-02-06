@@ -2,6 +2,8 @@ from re import X
 import pygame
 from src import button
 from src import player
+from src import hearts
+import random
 
 class Controller():
     #The Display 
@@ -32,6 +34,10 @@ class Controller():
             self.exit_image = pygame.image.load('assets/exit.png')
             self.title = pygame.image.load('assets/lovemessage.png')
             self.background = pygame.image.load('assets/background.png')
+            self.music = pygame.mixer.music
+            self.music.load('assets/music/music.mp3')
+            self.music.set_volume(0.3)
+            self.music.play(loops=1)
 
             self.start_button = button.Button(550, 660, self.screen, self.start_image)
             self.help_button = button.Button(40,660, self.screen, self.help_image)
@@ -82,6 +88,11 @@ class Controller():
         self.health = 0
         self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
         self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
+
+        self.heart_sprite = pygame.sprite.Group()
+        # for i in range(5):
+        #     x , y = 700 , random.randrange(700, 1400)
+        self.heart_sprite.add(hearts.Hearts(700, 1400, self.screen, 'assets/heart.png'))
 
         while self.STATE == "game":
             for event in pygame.event.get():
@@ -137,6 +148,7 @@ class Controller():
             self.player.update()     
             self.screen.blit(self.display_health, (1370, 50))
             self.screen.blit(self.display_score, (10, 50))
+            self.heart_sprite.draw(self.screen)
 
             pygame.display.flip()
     def end_screen(self):
