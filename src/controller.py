@@ -208,7 +208,22 @@ class Controller():
         
     def help(self):
         while self.STATE == "help":
-            self.background = pygame.image.load('assets/background.png')
+            self.screen.fill((0,0,0))
+            self.menu_background = pygame.image.load('assets/help/menuBackground.png')
+            self.instructions = pygame.image.load('assets/help/instructions.png')
+            self.back_button = pygame.image.load('assets/help/back.png')
+            self.screen.blit(self.menu_background, (0,0))
+            self.screen.blit(self.instructions, (0,0))
+            self.back_button = button.Button(400, 740, self.screen, self.back_button)
+            self.back_button.draw()
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.STATE = "exit"
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.back_button.rect.collidepoint(event.pos):
+                        self.STATE = "start"
     #Exit the Game
     def exit_game(self):
         self.is_running = False
