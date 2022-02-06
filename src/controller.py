@@ -139,13 +139,9 @@ class Controller():
             self.screen.blit(self.display_score, (10, 50))
 
             pygame.display.flip()
-<<<<<<< HEAD
     def end_screen(self):
         pass
         
-=======
-
->>>>>>> a35091ae6c8762699ceac56cdfddfd5bab1ecfaf
     def help(self):
         while self.STATE == "help":
             self.background = pygame.image.load('assets/background.png')
