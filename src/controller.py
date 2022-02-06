@@ -1,6 +1,7 @@
 from re import X
 import pygame
 import random
+import time
 from src import button
 from src import player
 from src import hearts
@@ -14,7 +15,7 @@ class Controller():
         self.screen_name = pygame.display.set_caption("Love Message")
         self.is_running = True
         self.font = pygame.font.SysFont("Minecraft", 70)
-        self.STATE = "start"
+        self.STATE = "win"
 
     def mainloop(self):
         while self.is_running == True:
@@ -24,6 +25,8 @@ class Controller():
                 self.game()
             elif self.STATE == "help":
                 self.help()
+            elif self.STATE == "win":
+                self.win()
             elif self.STATE == "end":
                 self.end_screen()
             elif self.STATE == "exit":
@@ -79,8 +82,7 @@ class Controller():
         x_umb = 0
         x_road = 0
         jumping = False
-        gravity = 0.6
-        heart = 1
+        gravity = 0.53
 
         self.sky = pygame.image.load('assets/city/Sky.png').convert()
         self.house = pygame.image.load('assets/city/houses.png').convert_alpha()
@@ -106,7 +108,7 @@ class Controller():
             self.all_obstacles.add(obstacles.Obstacles(x_obs, y_obs, randoNumbo))
 
         while self.STATE == "game":
-            self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
+            self.display_score = self.font.render('Envelope Collected : ' + str(self.score), False , (225, 215, 0))
             self.display_health = self.font.render('Health : ' + str(self.player.health), False , (225, 215, 0))
             self.player.y_velocity += gravity
             if self.player.y_velocity > 10:
@@ -178,8 +180,14 @@ class Controller():
                 player_hit = pygame.sprite.spritecollide(self.player, self.all_heart_sprites, True, pygame.sprite.collide_circle_ratio(0.4))
                 player_hit_by_obstacle = pygame.sprite.spritecollide(self.player, self.all_obstacles, True, pygame.sprite.collide_circle_ratio(0.4))
                 if player_hit:
+                    envelope = pygame.mixer.Sound('assets/music/love.mp3')
+                    pygame.mixer.Sound.play(envelope)
                     self.score += 1
+                    
+                    
                 if player_hit_by_obstacle:
+                    ouch = pygame.mixer.Sound('assets/music/ouch.mp3')
+                    pygame.mixer.Sound.play(ouch)
                     self.player.health -= 1
                 
                 if len(self.all_obstacles) < 20:
@@ -193,6 +201,10 @@ class Controller():
                 if len(self.all_heart_sprites) < 10:
                     new_x, new_y = random.randrange(2000, 20000), random.randrange(600, 700)
                     self.all_heart_sprites.add(hearts.Hearts(new_x, new_y))
+            else:
+                self.STATE = "end"
+            if self.score == 10:
+                self.STATE = "win"
 
             self.all_heart_sprites.update()
             self.all_heart_sprites.draw(self.screen)
@@ -210,8 +222,33 @@ class Controller():
             pygame.display.flip()
 
     def end_screen(self):
-        pass
-        
+        self.screen.fill((0,0,0))
+        self.end_background = pygame.image.load('assets/endscreen/darkBackground.png')
+        self.end_menu = pygame.image.load('assets/endscreen/darkMenu.png')
+        self.end_quit = pygame.image.load('assets/endscreen/darkQuit.png')
+        self.end_restart = pygame.image.load('assets/endscreen/darkRestart.png')
+        self.end_gameover = pygame.image.load('assets/endscreen/gameOver.png')
+        self.screen.blit(self.end_background, (0, 0))
+        self.screen.blit(self.end_gameover, (0,0))
+        self.end_menu_button= button.Button(400, 570, self.screen, self.end_menu)
+        self.end_quit_button = button.Button(400, 740, self.screen, self.end_quit)
+        self.end_restart_button = button.Button(400, 370, self.screen, self.end_restart)
+        self.end_menu_button.draw()
+        self.end_quit_button.draw()
+        self.end_restart_button.draw()
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.STATE = "exit"
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.end_menu_button.rect.collidepoint(event.pos):
+                    self.STATE = "start"
+                if self.end_quit_button.rect.collidepoint(event.pos):
+                    self.STATE = "exit"
+                if self.end_menu_button.rect.collidepoint(event.pos):
+                    self.STATE = "start"
+
     def help(self):
         while self.STATE == "help":
             self.screen.fill((0,0,0))
@@ -230,6 +267,21 @@ class Controller():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.back_button.rect.collidepoint(event.pos):
                         self.STATE = "start"
+    def win(self):
+        self.end_one = []
+        self.end_two = []
+        while self.STATE == "win":
+            for i in range(1,4):
+                image = pygame.image.load(f"assets/win/end1/Win ({i}).png")
+                self.end_one.append(image)
+            for i in range(1,9):
+                image = pygame.image.load(f"assets/win/end2/Win ({i}).png")
+                self.end_two.append(image)
+            for i in self.end_one:
+                self.screen.blit(i, (0,0))
+            for i in self.end_two:
+                self.screen.blit(i, (0,0))
+            pygame.display.update()
     #Exit the Game
     def exit_game(self):
         self.is_running = False
