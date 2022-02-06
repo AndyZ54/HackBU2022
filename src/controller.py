@@ -9,6 +9,7 @@ class Controller():
         self.screen = pygame.display.set_mode((1600,900))
         self.screen_name = pygame.display.set_caption("Love Message")
         self.is_running = True
+        self.font = pygame.font.SysFont("Minecraft", 70)
         self.STATE = "start"
 
     def mainloop(self):
@@ -19,6 +20,8 @@ class Controller():
                 self.game()
             elif self.STATE == "help":
                 self.help()
+            elif self.STATE == "end":
+                self.end_screen()
             elif self.STATE == "exit":
                 self.exit_game()
     #Start Screen
@@ -75,6 +78,11 @@ class Controller():
         self.umbrella = pygame.image.load('assets/city/umbrellapolicebox.png').convert_alpha()
         self.road = pygame.image.load('assets/city/road.png').convert_alpha()
 
+        self.score = 0
+        self.health = 0
+        self.display_score = self.font.render('Hearts Collected : ' + str(self.score), False , (225, 215, 0))
+        self.display_health = self.font.render('Health : ' + str(self.health), False , (225, 215, 0))
+
         while self.STATE == "game":
             clock = pygame.time.Clock()
             Framerate = 60
@@ -125,11 +133,14 @@ class Controller():
             x_road -= 1
 
             self.player.draw(self.screen)
-            self.player.update()        
+            self.player.update()     
+            self.screen.blit(self.display_health, (1370, 50))
+            self.screen.blit(self.display_score, (10, 50))
 
 
             pygame.display.flip()
-
+    def end_screen(self):
+        pass
         
     def help(self):
         while self.STATE == "help":
